@@ -1,0 +1,17 @@
+import random
+contador=0
+
+for i in range(1,11):
+  x=random.randint(0,10)
+  y=random.randint(0,10)
+
+  print(f"Pregunta {i}")
+  print(f"Cuanto es: {x} x {y}")
+  respuesta=float(input())
+  if respuesta == (x*y):
+    print(f"Correcto!")
+    contador+=1
+  else:
+    print(f"Incorrecto: La respuesta era: {(x*y)}")
+
+print(f"Tuvo {contador} respuestas correctas de {i}")
