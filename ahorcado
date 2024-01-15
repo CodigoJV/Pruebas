@@ -1,0 +1,139 @@
+import os
+import random
+
+AHORCADO = [
+    '''
+      +---+
+      |   |
+      |
+      |
+      |
+      |
+    =========''',
+    '''
+      +---+
+      |   |
+      |   O
+      |
+      |
+      |
+    =========''',
+    '''
+      +---+
+      |   |
+      |   O
+      |   |
+      |
+      |
+    =========''',
+    '''
+      +---+
+      |   |
+      |   O
+      |  /|
+      |
+      |
+    =========''',
+    '''
+      +---+
+      |   |
+      |   O
+      |  /|\\
+      |
+      |
+    =========''',
+    '''
+      +---+
+      |   |
+      |   O
+      |  /|\\
+      |  /
+      |
+    =========''',
+    '''
+      +---+
+      |   |
+      |   O
+      |  /|\\
+      |  / \\
+      |
+    ========='''
+]
+
+def vidas_diccionario_visual(vidas):
+    return AHORCADO[6 - vidas]
+
+def palabra_val(palabras):
+    palabra = random.choice(palabras)
+    while "-" in palabra or " " in palabra:
+        palabra = random.choice(palabras)
+    return palabra.upper()
+
+def ahorcado():
+    print('╔═══════════════════╗')
+    print('║ A H O R C A D O ! ║')
+    print('╚═══════════════════╝')
+
+    palabras = ("lista", "diccionario", "bucle", "función", "modulo", "variable", 
+                "cadena", "clase", "objeto", "herencia", "excepcion", "motodo",
+                "iterador", "archivo", "decorador")
+
+    palabra = palabra_val(palabras)
+    letras_adivinar = set(palabra)
+    abc = "abcdefghijklmnopqrstuvwxyz".upper()
+    letras_adivinadas = set()
+    vidas = 3
+
+    while len(letras_adivinar) > 0 and vidas > 0:
+        print(f"Tienes {vidas} vidas y has usado estas letras: {''.join(letras_adivinadas)} ")
+        palabra_lista = [letra if letra in letras_adivinadas else "-" for letra in palabra]
+        print(vidas_diccionario_visual(vidas))
+        print(f"Palabra: {''.join(palabra_lista)}")
+
+        letra_usuario = input("Escoge una letra: ").upper()
+
+        os.system('clear')
+        os.system('cls')
+
+        if letra_usuario in set(abc) - letras_adivinadas:
+            letras_adivinadas.add(letra_usuario)
+            if letra_usuario in letras_adivinar:
+                letras_adivinar.remove(letra_usuario)
+                print('')
+            else:
+                vidas -= 1
+        elif letra_usuario in letras_adivinadas:
+            print(f"\nYa escogiste esta letra. Por favor elige otra.")
+        else:
+            print("Solo puedes escribir letras y una a la vez.")
+            vidas -= 1
+
+    if vidas == 0:
+        print(vidas_diccionario_visual(vidas))
+        print("Has perdido, ahorcado. La palabra era:", palabra)
+    else:
+        print(f"""
+        +---+
+        |   |
+        |   	GRACIAS!!
+        |  
+        |         \\☺/
+        |          |
+    =========     / \\
+              """)
+        print(f"Felicidades, has adivinado la palabra: {palabra}")
+
+def jugar():
+  ahorcado()
+  volver=input(f"Desea volver a jugar? Si/No ")
+
+  while volver.lower().startswith("s"):
+    if volver.lower().startswith("s"):
+      os.system('clear')
+      os.system('cls')
+      ahorcado()
+      volver=input(f"Desea volver a jugar? Si/No ")
+    else:
+      exit()
+
+jugar()
